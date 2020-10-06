@@ -14,6 +14,7 @@ public class World {
             switch (args[i]){
                 case "f":
                     arr[i] = Direction.FORWARD;
+                    break;
                 case "b":
                     arr[i] = Direction.BACKWARD;
                     break;
