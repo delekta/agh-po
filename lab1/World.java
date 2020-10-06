@@ -7,7 +7,7 @@ public class World {
 
 	    // String[] arr = {"wrr", "brr", "grr"};
         //Moves[] arr = {Moves.FORWARD, Moves.LEFT, Moves.RIGHT};
-        Moves[] arr = new Moves[args.length];
+        Direction[] arr = new Direction[args.length];
         arr = changeToEnum(arr, args);
         run(arr);
 
@@ -15,47 +15,40 @@ public class World {
 	    System.out.println("End of the system");
     }
 
-    public static Moves[] changeToEnum(Moves[] arr, String[] args){
+    public static Direction[] changeToEnum(Direction[] arr, String[] args){
         for(int i = 0; i < args.length; i++){
             switch (args[i]){
                 case "f":
-                    arr[i] = Moves.FORWARD;
+                    arr[i] = Direction.FORWARD;
                     break;
                 case "b":
-                    arr[i] = Moves.BACKWARD;
+                    arr[i] = Direction.BACKWARD;
                     break;
                 case "r":
-                    arr[i] = Moves.RIGHT;
+                    arr[i] = Direction.RIGHT;
                     break;
                 case "l":
-                    arr[i] = Moves.LEFT;
+                    arr[i] = Direction.LEFT;
                     break;
             }
         }
         return arr;
     }
 
-    public static void run(Moves[] arr){
-        for(Moves a: arr){
-            if(a == Moves.FORWARD){
+    public static void run(Direction[] arr){
+        for(Direction a: arr){
+            if(a == Direction.FORWARD){
                 System.out.println("Beast move forward");
             }
-            else if(a == Moves.BACKWARD){
+            else if(a == Direction.BACKWARD){
                 System.out.println("Beast move backward");
             }
-            else if(a == Moves.RIGHT){
+            else if(a == Direction.RIGHT){
                 System.out.println("Beast move right");
             }
-            else if(a == Moves.LEFT){
+            else if(a == Direction.LEFT){
                 System.out.println("Beast move left");
             }
         }
-
-        /*System.out.print("Beast move forward");
-
-        for(String a :arr){
-            System.out.print(", " + a);
-        }
-        System.out.println(".");*/
     }
 }
