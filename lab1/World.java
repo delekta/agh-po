@@ -4,23 +4,16 @@ public class World {
 
     public static void main(String[] args) {
 	    System.out.println("Start of the system");
-
-	    // String[] arr = {"wrr", "brr", "grr"};
-        //Moves[] arr = {Moves.FORWARD, Moves.LEFT, Moves.RIGHT};
-        Direction[] arr = new Direction[args.length];
-        arr = changeToEnum(arr, args);
-        run(arr);
-
-
+        run(changeToEnum(args));
 	    System.out.println("End of the system");
     }
 
-    public static Direction[] changeToEnum(Direction[] arr, String[] args){
+    public static Direction[] changeToEnum(String[] args){
+        Direction[] arr = new Direction[args.length];
         for(int i = 0; i < args.length; i++){
             switch (args[i]){
                 case "f":
                     arr[i] = Direction.FORWARD;
-                    break;
                 case "b":
                     arr[i] = Direction.BACKWARD;
                     break;
@@ -37,17 +30,19 @@ public class World {
 
     public static void run(Direction[] arr){
         for(Direction a: arr){
-            if(a == Direction.FORWARD){
-                System.out.println("Beast move forward");
-            }
-            else if(a == Direction.BACKWARD){
-                System.out.println("Beast move backward");
-            }
-            else if(a == Direction.RIGHT){
-                System.out.println("Beast move right");
-            }
-            else if(a == Direction.LEFT){
-                System.out.println("Beast move left");
+            switch (a){
+                case FORWARD:
+                    System.out.println("Beast move forward");
+                    break;
+                case BACKWARD:
+                    System.out.println("Beast move backward");
+                    break;
+                case RIGHT:
+                    System.out.println("Beast move right");
+                    break;
+                case LEFT:
+                    System.out.println("Beast move left");
+                    break;
             }
         }
     }
