@@ -6,6 +6,7 @@ public class World {
 	    System.out.println("Start of the system");
         run(changeToEnum(args));
 	    System.out.println("End of the system");
+
     }
 
     public static Direction[] changeToEnum(String[] args){
