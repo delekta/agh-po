@@ -24,8 +24,8 @@ public class AnimalTest {
         Assert.assertEquals(animal.position, new Vector2d(0,0));
 
 
-        Assert.assertTrue(animal.isOnMap(animal.position.x, 0));
-        Assert.assertTrue(animal.isOnMap(animal.position.y, 0));
+        Assert.assertTrue(animal.isOnMap());
+        Assert.assertTrue(animal.isOnMap());
     }
 
     @Test
@@ -41,8 +41,8 @@ public class AnimalTest {
         Assert.assertEquals(animal.position, new Vector2d(1,-1));
 
 
-        Assert.assertTrue(animal.isOnMap(animal.position.x, 0));
-        Assert.assertTrue(animal.isOnMap(animal.position.y, 0));
+        Assert.assertTrue(animal.isOnMap());
+        Assert.assertTrue(animal.isOnMap());
     }
 
     @Test
@@ -58,8 +58,8 @@ public class AnimalTest {
         Assert.assertEquals(animal.position, new Vector2d(1,-4));
 
 
-        Assert.assertTrue(animal.isOnMap(animal.position.x, 0));
-        Assert.assertTrue(animal.isOnMap(animal.position.y, 0));
+        Assert.assertTrue(animal.isOnMap());
+        Assert.assertTrue(animal.isOnMap());
     }
 
     @Test
@@ -75,8 +75,8 @@ public class AnimalTest {
         Assert.assertEquals(animal.position, new Vector2d(3,4));
 
 
-        Assert.assertTrue(animal.isOnMap(animal.position.x, 0));
-        Assert.assertTrue(animal.isOnMap(animal.position.y, 0));
+        Assert.assertTrue(animal.isOnMap());
+        Assert.assertTrue(animal.isOnMap());
     }
 
 

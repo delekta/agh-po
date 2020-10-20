@@ -21,60 +21,21 @@ public class Animal {
                 orientation = orientation.next();
                 break;
             case FORWARD:
-                changePosition(MoveDirection.FORWARD);
+                this.position = this.position.add(orientation.toUnitVector());
+                if(!isOnMap()){
+                    // System.out.println("End of map!!!");
+                    this.position = this.position.subtract(orientation.toUnitVector());
+                }
                 break;
             case BACKWARD:
-                changePosition(MoveDirection.BACKWARD);
+                this.position = this.position.subtract(orientation.toUnitVector());
+                if(!isOnMap()){
+                    // System.out.println("End of map!!!");
+                    this.position = this.position.add(orientation.toUnitVector());
+                }
                 break;
         }
     }
-
-    public void changePosition(MoveDirection direction){
-            int moveValue = 0;
-            switch (direction) {
-                case FORWARD:
-                    moveValue = 1;
-                    break;
-                case BACKWARD:
-                    moveValue = -1;
-                    break;
-            }
-
-            switch (this.orientation) {
-                case NORTH:
-                    if(isOnMap(this.position.y, moveValue)) {
-                        this.position = this.position.add(new Vector2d(0, moveValue));
-                    }
-                    else{
-                        // System.out.println("End of the map!!!");
-                    }
-                    break;
-                case EAST:
-                    if(isOnMap(this.position.x, moveValue)) {
-                        this.position = this.position.add(new Vector2d(moveValue, 0));
-                    }
-                    else{
-                        // System.out.println("End of the map!!!");
-                    }
-                    break;
-                case SOUTH:
-                    if(isOnMap(this.position.y, -moveValue)) {
-                        this.position = this.position.add(new Vector2d(0, -moveValue));
-                    }
-                    else{
-                        // System.out.println("End of the map!!!");
-                    }
-                    break;
-                case WEST:
-                    if(isOnMap(this.position.x, -moveValue)){
-                        this.position = this.position.add(new Vector2d(-moveValue, 0));
-                    }
-                    else{
-                        // System.out.println("End of the map!!!");
-                    }
-                    break;
-            }
-        }
 
     private int abs(int i) {
         if(i > 0){
@@ -85,7 +46,7 @@ public class Animal {
         }
     }
 
-    public boolean isOnMap(int position, int value){
-        return this.abs(position + value) <= 4;
+    public boolean isOnMap(){
+        return abs(this.position.x) <= 4 && abs(this.position.y) <= 4;
     }
 }
