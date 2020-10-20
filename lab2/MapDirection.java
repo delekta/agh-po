@@ -7,7 +7,6 @@ public enum MapDirection {
     WEST,
     EAST;
 
-
     public String toString(){
         switch(this) {
             case NORTH: return "NORTH - Północ";
