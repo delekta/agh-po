@@ -1,45 +1,35 @@
 package agh.cs.lab3;
 
+import agh.cs.lab2.MapDirection;
 import agh.cs.lab2.MoveDirection;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 public class OptionsParser {
-    public MoveDirection[] parse(String[] moves){
-        int count = 0;
+    public LinkedList<MoveDirection> parse(String[] moves){
         String[] familiar = new String[]{"f", "forward", "l", "left", "b", "backward", "r", "right"};
 
-        // Counting familiar directions, Can it be done different? Because need result length.
-        for(int i = 0; i < moves.length; i++){
-            for(int j = 0; j < familiar.length; j++){
-                if(moves[i].equals(familiar[j])){
-                    count++;
-                    break;
-                }
-            }
-        }
+        LinkedList<MoveDirection> result = new LinkedList<>();
 
-        MoveDirection[] result = new MoveDirection[count];
-        int idx = 0;
         for(int i = 0; i < moves.length; i++){
             switch (moves[i]){
                 case "f":
                 case "forward":
-                    result[idx] = MoveDirection.FORWARD;
-                    idx++;
+                    result.add(MoveDirection.FORWARD);
                     break;
                 case "r":
                 case "right":
-                    result[idx] = MoveDirection.RIGHT;
-                    idx++;
+                    result.add(MoveDirection.RIGHT);
                     break;
                 case "b":
                 case "backward":
-                    result[idx] = MoveDirection.BACKWARD;
-                    idx++;
+                    result.add(MoveDirection.BACKWARD);
                     break;
                 case "l":
                 case "left":
-                    result[idx] = MoveDirection.LEFT;
-                    idx++;
+                    result.add(MoveDirection.LEFT);
                     break;
             }
         }

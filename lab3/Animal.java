@@ -2,6 +2,8 @@ package agh.cs.lab3;
 
 import agh.cs.lab2.*;
 
+import java.util.LinkedList;
+
 public class Animal {
 
     
