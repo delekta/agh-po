@@ -5,8 +5,13 @@ import agh.cs.lab2.*;
 public class Animal {
 
     // public for tests
-    public MapDirection orientation = MapDirection.NORTH;
-    public Vector2d position = new Vector2d(2,2);
+    private MapDirection orientation = MapDirection.NORTH;
+    public void setOrientation(MapDirection o){ this.orientation = o;}
+    public MapDirection getOrientation() { return orientation; }
+
+    private Vector2d position = new Vector2d(2,2);
+    public void setPosition(Vector2d v){ this.position = v;}
+    public Vector2d getPosition(){return position;}
 
     public String toString(){
         return "Position: " + position.toString() + " Orientation: " + orientation.toString();

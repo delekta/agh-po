@@ -8,7 +8,7 @@ import agh.cs.lab3.OptionsParser;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class AnimalTest {
+public class AnimalTest{
 
     @Test
     public void orientationTest(){
@@ -20,8 +20,8 @@ public class AnimalTest {
         for(MoveDirection m: parser.parse(moves)){
             animal.move(m);
         }
-        Assert.assertEquals(animal.orientation, MapDirection.EAST);
-        Assert.assertEquals(animal.position, new Vector2d(0,0));
+        Assert.assertEquals(animal.getOrientation(), MapDirection.EAST);
+        Assert.assertEquals(animal.getPosition(), new Vector2d(0,0));
 
 
         Assert.assertTrue(animal.isOnMap());
@@ -37,8 +37,8 @@ public class AnimalTest {
         for(MoveDirection m: parser.parse(moves)){
             animal.move(m);
         }
-        Assert.assertEquals(animal.orientation, MapDirection.SOUTH);
-        Assert.assertEquals(animal.position, new Vector2d(1,-1));
+        Assert.assertEquals(animal.getOrientation(), MapDirection.SOUTH);
+        Assert.assertEquals(animal.getPosition(), new Vector2d(1,-1));
 
 
         Assert.assertTrue(animal.isOnMap());
@@ -54,8 +54,8 @@ public class AnimalTest {
         for(MoveDirection m: parser.parse(moves)){
             animal.move(m);
         }
-        Assert.assertEquals(animal.orientation, MapDirection.SOUTH);
-        Assert.assertEquals(animal.position, new Vector2d(1,-4));
+        Assert.assertEquals(animal.getOrientation(), MapDirection.SOUTH);
+        Assert.assertEquals(animal.getPosition(), new Vector2d(1,-4));
 
 
         Assert.assertTrue(animal.isOnMap());
@@ -71,14 +71,12 @@ public class AnimalTest {
         for(MoveDirection m: parser.parse(moves)){
             animal.move(m);
         }
-        Assert.assertEquals(animal.orientation, MapDirection.NORTH);
-        Assert.assertEquals(animal.position, new Vector2d(3,4));
+        Assert.assertEquals(animal.getOrientation(), MapDirection.NORTH);
+        Assert.assertEquals(animal.getPosition(), new Vector2d(3,4));
 
 
         Assert.assertTrue(animal.isOnMap());
         Assert.assertTrue(animal.isOnMap());
     }
-
-
 
 }
