@@ -9,8 +9,6 @@ import java.util.List;
 
 public class OptionsParser {
     public LinkedList<MoveDirection> parse(String[] moves){
-        String[] familiar = new String[]{"f", "forward", "l", "left", "b", "backward", "r", "right"};
-
         LinkedList<MoveDirection> result = new LinkedList<>();
 
         for(int i = 0; i < moves.length; i++){
