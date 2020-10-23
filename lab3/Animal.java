@@ -4,7 +4,7 @@ import agh.cs.lab2.*;
 
 public class Animal {
 
-    // public for tests
+    
     private MapDirection orientation = MapDirection.NORTH;
     public void setOrientation(MapDirection o){ this.orientation = o;}
     public MapDirection getOrientation() { return orientation; }
