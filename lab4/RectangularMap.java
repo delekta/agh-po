@@ -12,16 +12,20 @@ import java.util.List;
 public class RectangularMap implements IWorldMap {
     private int height;
     private int width;
+
+    // Implementation using matrix array
     private Animal[][] animals;
+    // Array needed to remember the order animals
     private List<Animal> order;
 
 
     public RectangularMap(int width, int height){
+        // Map is a rectangular created by points: (0, 0), (width, height)
         this.height = height;
         this.width = width;
         this.animals = new Animal[height + 1][width + 1];
 
-        // filing array with null
+        // Filling array with null
         for(int i = 0; i < height + 1; i++)
         {
             Arrays.fill(animals[i], null);
@@ -31,14 +35,16 @@ public class RectangularMap implements IWorldMap {
 
     @Override
     public void run(LinkedList<MoveDirection> directions) {
+        // Needed to assign current animal
         int i = 0;
         for(MoveDirection direction: directions){
+            // If we have already taken the last animal, the queue starts again
             if(i >= this.order.size()){
                 i = 0;
             }
             Animal animal = order.get(i);
 
-            // mój toString, wypisuje aktualną sytuacje
+            // My toString, print out current situation(position on the map, next move)
             // debugger(animal, direction);
 
                 switch(direction) {
@@ -49,30 +55,31 @@ public class RectangularMap implements IWorldMap {
                         animal.setOrientation(animal.getOrientation().next());
                         break;
                     case FORWARD:
-                        //?
+                        // Check if we can move to new position
                         if(canMoveTo(animal.getPosition().add(animal.getOrientation().toUnitVector()))){
+                            // Reset previous position
                             animals[animal.getPosition().y][animal.getPosition().x] = null;
                             animal.setPosition(animal.getPosition().add(animal.getOrientation().toUnitVector()));
                             animals[animal.getPosition().y][animal.getPosition().x] = animal;
                         }
                     break;
                     case BACKWARD:
-                        //?
+                        // Check if we can move to new position
                         if(canMoveTo(animal.getPosition().subtract(animal.getOrientation().toUnitVector()))){
+                            // Reset old previous position
                             animals[animal.getPosition().y][animal.getPosition().x] = null;
                             animal.setPosition(animal.getPosition().subtract(animal.getOrientation().toUnitVector()));
                             animals[animal.getPosition().y][animal.getPosition().x] = animal;
                         }
                         break;
                     }
-                i++;
+                i++; // <- Take another animal
             }
 
     }
 
     @Override
     public boolean canMoveTo(Vector2d position) {
-        // rectangular created by points: (0, 0), (width, height)
         if(!isOccupied(position)){
             return true;
         }
@@ -95,7 +102,7 @@ public class RectangularMap implements IWorldMap {
 
     @Override
     public boolean isOccupied(Vector2d position) {
-        // sprawdza czy dana pozycja znajduję się na mapie
+        // Check that the position is on the map
         if(position.x >= 0 && position.x <= this.width && position.y >= 0 && position.y <= this.height){
             if(animals[position.y][position.x] == null){
                 return false;
@@ -103,7 +110,7 @@ public class RectangularMap implements IWorldMap {
             else{
                 return true;
             }
-        } // zwracane gdy jestesmy poza mapa, bo nie mozemy sie tam ruszyc, wiec jest tak jakby polem zajetym!!!
+        } // Returned when we are off the map as we can't move there so it's like occupied field!!!
         else return true;
     }
 
@@ -115,7 +122,7 @@ public class RectangularMap implements IWorldMap {
         else return null;
     }
 
-    // mój toString
+    // My toString
     public void debugger(Animal animal, MoveDirection direction){
         MapVisualizer visual = new MapVisualizer(this);
         System.out.println("Animal (x = " + animal.getPosition().x + " y = " + animal.getPosition().y

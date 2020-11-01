@@ -14,7 +14,7 @@ import java.util.LinkedList;
 
 public class RectangularMapTest extends TestCase {
 
-    public void testTestRun() {
+    public void testRun() {
         // test1
         String[] moves = new String[]{"f",  "b", "r", "l", "f", "f", "r", "r", "f", "f", "f", "f", "f", "f", "f", "f"};
         LinkedList<MoveDirection> directions = new OptionsParser().parse(moves);
