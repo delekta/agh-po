@@ -29,7 +29,15 @@ public class GrassField implements IWorldMap {
     // because i must implement everything
     @Override
     public boolean canMoveTo(Vector2d position) {
-        return false;
+        // sprawdzam tylko inne zwierzeta, bo tylko to blokuje ruch
+        if(!animals.isEmpty()){
+            for (Animal animal : animals) {
+                if (animal.getPosition().x == position.x && animal.getPosition().y == position.y) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     private void placeGrasses(int number){
@@ -41,7 +49,7 @@ public class GrassField implements IWorldMap {
                 x = rand.nextInt((int)Math.sqrt(this.n * 10));
                 y = rand.nextInt((int)Math.sqrt(this.n * 10));
                 System.out.println("x:" + x + " | y:" + y);
-            }while(isOccupied(new Vector2d(x, y)));
+            }while(isOccupied(new Vector2d(x, y))); // jesli okupowany to powtarzaj
             this.grasses.add(new Grass(new Vector2d(x, y)));
         }
     }
@@ -68,13 +76,13 @@ public class GrassField implements IWorldMap {
                     break;
                 case FORWARD:
                     // Check if we can move to new position
-                    if(!isOccupied(animal.getPosition().add(animal.getOrientation().toUnitVector()))){
+                    if(canMoveTo(animal.getPosition().add(animal.getOrientation().toUnitVector()))){
                         animal.setPosition(animal.getPosition().add(animal.getOrientation().toUnitVector()));
                     }
                     break;
                 case BACKWARD:
                     // Check if we can move to new position
-                    if(!isOccupied(animal.getPosition().subtract(animal.getOrientation().toUnitVector()))){
+                    if(canMoveTo(animal.getPosition().subtract(animal.getOrientation().toUnitVector()))){
                         animal.setPosition(animal.getPosition().subtract(animal.getOrientation().toUnitVector()));
                     }
                     break;
@@ -122,7 +130,7 @@ public class GrassField implements IWorldMap {
             return true;
         }
         else{
-            // prirytet zmierzecia nad trawa
+            // prirytet zmierzecia nad trawa, chyba nie o to chodzi
             Object object = objectAt(animal.getPosition());
             if(object instanceof Grass){
                 // reomving grass
@@ -141,8 +149,6 @@ public class GrassField implements IWorldMap {
         return false;
     }
 
-
-    // musisz tez przesjc po animalach
     @Override
     public boolean isOccupied(Vector2d position) {
         if(!animals.isEmpty()){
@@ -153,7 +159,7 @@ public class GrassField implements IWorldMap {
             }
         }
         if (!grasses.isEmpty()) {
-            for (Grass grass : grasses) {
+            for(Grass grass : grasses) {
                 if (grass.getPosition().x == position.x && grass.getPosition().y == position.y) {
                     return true;
                 }
@@ -165,6 +171,7 @@ public class GrassField implements IWorldMap {
 
     @Override
     public Object objectAt(Vector2d position) {
+        // [ realizowanie wyzszego priorytetu zwierzat]
         for (Animal animal : animals){
             if(animal.getPosition().x == position.x && animal.getPosition().y == position.y){
                 return animal;

@@ -14,8 +14,8 @@ public class World {
         // sprawdzam dla: f b r l f f r r f f f f f f f f -> OK
         LinkedList<MoveDirection> directions = new OptionsParser().parse(args);
         IWorldMap map = new GrassField(10);
-        map.place(new Animal(map,new Vector2d(5,5)));
-        map.place(new Animal(map,new Vector2d(7,7)));
+        map.place(new Animal(map,new Vector2d(0,9)));
+        map.place(new Animal(map,new Vector2d(1,9)));
         map.run(directions);
         System.out.println(map.toString());
     }
