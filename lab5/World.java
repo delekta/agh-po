@@ -11,12 +11,15 @@ import java.util.LinkedList;
 
 public class World {
     public static void main(String[] args) {
-        // sprawdzam dla: f b r l f f r r f f f f f f f f -> OK
-        LinkedList<MoveDirection> directions = new OptionsParser().parse(args);
+        String[] moves = new String[]{"f",  "b", "r", "l", "f", "f", "r", "r", "f", "f", "f", "f", "f", "f", "f", "f"};
+        LinkedList<MoveDirection> directions = new OptionsParser().parse(moves);
         IWorldMap map = new GrassField(10);
-        map.place(new Animal(map,new Vector2d(0,9)));
-        map.place(new Animal(map,new Vector2d(1,9)));
+        Animal animal1 = new Animal(map);
+        Animal animal2 = new Animal(map,new Vector2d(3,4));
+
+        map.place(animal1);
+        map.place(animal2);
+
         map.run(directions);
-        System.out.println(map.toString());
     }
 }

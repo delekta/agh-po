@@ -48,7 +48,7 @@ public class GrassField implements IWorldMap {
             do{
                 x = rand.nextInt((int)Math.sqrt(this.n * 10));
                 y = rand.nextInt((int)Math.sqrt(this.n * 10));
-                System.out.println("x:" + x + " | y:" + y);
+//                System.out.println("x:" + x + " | y:" + y);
             }while(isOccupied(new Vector2d(x, y))); // jesli okupowany to powtarzaj
             this.grasses.add(new Grass(new Vector2d(x, y)));
         }
@@ -64,10 +64,9 @@ public class GrassField implements IWorldMap {
             }
             Animal animal = animalListIterator.next();
 
-            // My toString, print out current situation(position on the map, next move)
 //            debugger(animal, direction);
 
-            switch(direction) {
+            switch(direction){
                 case LEFT:
                     animal.setOrientation(animal.getOrientation().previous());
                     break;
@@ -117,7 +116,7 @@ public class GrassField implements IWorldMap {
         }
         MapVisualizer visual = new MapVisualizer(this);
 
-        return visual.draw(new Vector2d(0, 0), new Vector2d(maxX, maxY));
+        return visual.draw(new Vector2d(-1, -1), new Vector2d(maxX, maxY));
     }
 
     @Override
@@ -130,23 +129,19 @@ public class GrassField implements IWorldMap {
             return true;
         }
         else{
-            // prirytet zmierzecia nad trawa, chyba nie o to chodzi
+            // musimy to robic
+            // prirytet zmierzecia nad trawa, chyba nie o to chodzi ?
+//            System.out.println("XD1");
             Object object = objectAt(animal.getPosition());
             if(object instanceof Grass){
-                // reomving grass
-                for(Grass grass : grasses){
-                    if(grass.getPosition().x == animal.getPosition().x && grass.getPosition().y == animal.getPosition().y){
-                        grasses.remove(grass);
-                        break;
-                    }
-                }
+//                System.out.println("XD2");
                 animals.add(animal);
+                return true; // wazne, bo udalo sie dodac
             }
             else{
                 return false;
             }
         }
-        return false;
     }
 
     @Override
@@ -184,5 +179,11 @@ public class GrassField implements IWorldMap {
             }
         }
         return null;
+    }
+
+    public void debugger(Animal animal, MoveDirection direction){
+        System.out.println("Animal (x = " + animal.getPosition().x + " y = " + animal.getPosition().y
+                + ") ruszy sie " + direction.toString());
+        System.out.println(this.toString());
     }
 }
