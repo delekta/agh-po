@@ -13,7 +13,7 @@ public class World {
         LinkedList<MoveDirection> directions = new OptionsParser().parse(args);
         int width = 10;
         int height = 5;
-        IWorldMap map = new RectangularMap(width, height);
+        IWorldMap map = new RectangularMapUsingList(width, height);
         map.place(new Animal(map));
         map.place(new Animal(map,new Vector2d(3,4)));
         map.run(directions);

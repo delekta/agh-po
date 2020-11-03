@@ -44,8 +44,8 @@ public class RectangularMap implements IWorldMap {
             }
             Animal animal = order.get(i);
 
-            // My toString, print out current situation(position on the map, next move)
-            // debugger(animal, direction);
+//             My toString, print out current situation(position on the map, next move)
+             debugger(animal, direction);
 
                 switch(direction) {
                     case LEFT:
