@@ -51,7 +51,7 @@ public class GrassField extends AbstractWorldMap {
                 x = rand.nextInt((int)Math.sqrt(this.n * 10));
                 y = rand.nextInt((int)Math.sqrt(this.n * 10));
 //                System.out.println("x:" + x + " | y:" + y);
-            }while(isOccupied(new Vector2d(x, y))); // jesli okupowany to powtarzaj
+            }while(isOccupied(new Vector2d(x, y))); // if place is occupied, fine new place
             this.grasses.add(new Grass(new Vector2d(x, y)));
         }
     }
