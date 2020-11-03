@@ -10,12 +10,15 @@ import java.util.*;
 
 import java.lang.Math;
 
-public class GrassField implements IWorldMap {
-    // Co z ujemnymi współrzędnymi?
+public class GrassField extends AbstractWorldMap {
+    // debugger() inherited from AbstractWorldMap
+    //   animals inherited from AbstractWorldMap
+    // run() inherited from AbstractWorldMap
+
 
     int n;
     public List<Grass> grasses;
-    public List<Animal> animals;
+
 
 
     public GrassField(int number) {
@@ -26,10 +29,9 @@ public class GrassField implements IWorldMap {
         placeGrasses(number);
     }
 
-    // because i must implement everything
     @Override
     public boolean canMoveTo(Vector2d position) {
-        // sprawdzam tylko inne zwierzeta, bo tylko to blokuje ruch
+        // I check only others Animals because only it can block move
         if(!animals.isEmpty()){
             for (Animal animal : animals) {
                 if (animal.getPosition().x == position.x && animal.getPosition().y == position.y) {
@@ -54,41 +56,7 @@ public class GrassField implements IWorldMap {
         }
     }
 
-    @Override
-    public void run(LinkedList<MoveDirection> directions) {
-        ListIterator<Animal> animalListIterator = animals.listIterator();
 
-        for(MoveDirection direction: directions){
-            if(!animalListIterator.hasNext()){
-                animalListIterator = animals.listIterator();
-            }
-            Animal animal = animalListIterator.next();
-
-//            debugger(animal, direction);
-
-            switch(direction){
-                case LEFT:
-                    animal.setOrientation(animal.getOrientation().previous());
-                    break;
-                case RIGHT:
-                    animal.setOrientation(animal.getOrientation().next());
-                    break;
-                case FORWARD:
-                    // Check if we can move to new position
-                    if(canMoveTo(animal.getPosition().add(animal.getOrientation().toUnitVector()))){
-                        animal.setPosition(animal.getPosition().add(animal.getOrientation().toUnitVector()));
-                    }
-                    break;
-                case BACKWARD:
-                    // Check if we can move to new position
-                    if(canMoveTo(animal.getPosition().subtract(animal.getOrientation().toUnitVector()))){
-                        animal.setPosition(animal.getPosition().subtract(animal.getOrientation().toUnitVector()));
-                    }
-                    break;
-            }
-        }
-
-    }
 
     @Override
     public String toString(){
@@ -121,22 +89,19 @@ public class GrassField implements IWorldMap {
 
     @Override
     public boolean place(Animal animal) {
-        // sprawdzam czy dana pozycja zawiera sie w mapie
-        // [TO DO] obecnosc zwierzat ma priorytet nad trawa ?
         if(!isOccupied(animal.getPosition())) {
             // placing animal
             animals.add(animal);
             return true;
         }
         else{
-            // musimy to robic
-            // prirytet zmierzecia nad trawa, chyba nie o to chodzi ?
 //            System.out.println("XD1");
             Object object = objectAt(animal.getPosition());
+            // if grass takes the place, put the animal anyway
             if(object instanceof Grass){
 //                System.out.println("XD2");
                 animals.add(animal);
-                return true; // wazne, bo udalo sie dodac
+                return true; // important, because we succeed in placing animal
             }
             else{
                 return false;
@@ -166,7 +131,7 @@ public class GrassField implements IWorldMap {
 
     @Override
     public Object objectAt(Vector2d position) {
-        // [ realizowanie wyzszego priorytetu zwierzat]
+        // [ fulfilling the higher priority of animals, we return it first]
         for (Animal animal : animals){
             if(animal.getPosition().x == position.x && animal.getPosition().y == position.y){
                 return animal;
@@ -179,11 +144,5 @@ public class GrassField implements IWorldMap {
             }
         }
         return null;
-    }
-
-    public void debugger(Animal animal, MoveDirection direction){
-        System.out.println("Animal (x = " + animal.getPosition().x + " y = " + animal.getPosition().y
-                + ") ruszy sie " + direction.toString());
-        System.out.println(this.toString());
     }
 }

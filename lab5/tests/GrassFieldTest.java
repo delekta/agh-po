@@ -69,7 +69,6 @@ public class GrassFieldTest extends TestCase {
         Assert.assertFalse(map.canMoveTo(new Vector2d(3, 4)));
     }
 
-    // nie zawsze!!!
     public void testPlace() {
         IWorldMap map2 = new GrassField(20);
         Animal animal12 = new Animal(map2, new Vector2d(4,4));
@@ -90,7 +89,8 @@ public class GrassFieldTest extends TestCase {
         map3.place(animal32);
         Assert.assertTrue(map3.isOccupied(new Vector2d(4, 3)));
         Assert.assertTrue(map3.isOccupied(new Vector2d(6, 2)));
-        Assert.assertFalse(map3.isOccupied(new Vector2d(0, 3))); // czasem zwraca true, bo na tym miejscu mamy trawe
+        // sometimes returns the tru3 because we have no control over place of the grass
+        Assert.assertFalse(map3.isOccupied(new Vector2d(0, 3)));
     }
 
     public void testObjectAt() {
@@ -103,6 +103,7 @@ public class GrassFieldTest extends TestCase {
         map3.place(animal32);
         Assert.assertEquals(map3.objectAt(new Vector2d(6,2)), animal22);
         Assert.assertEquals(map3.objectAt(new Vector2d(1,1)), animal12);
-        Assert.assertEquals(map3.objectAt(new Vector2d(3,3)), null); // czasem zwraca true, bo na tym miejscu mamy trawe
+        // sometimes returns the true because we have no control over place of the grass
+        Assert.assertEquals(map3.objectAt(new Vector2d(3,3)), null);
     }
 }
