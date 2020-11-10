@@ -42,7 +42,9 @@ public class RectangularMapUsingList extends AbstractWorldMap {
             return true;
         }
         else{
-            return false;
+            // added during lab 6
+            throw new IllegalArgumentException("x:" + animal.getPosition().x + " " + "y: " + animal.getPosition().y + " jest juz zajęte");
+//            return false;
         }
     }
 

@@ -29,6 +29,9 @@ public class OptionsParser {
                 case "left":
                     result.add(MoveDirection.LEFT);
                     break;
+                    // added during lab 6
+                default:
+                    throw new IllegalArgumentException(moves[i]+ " is not legal move specification");
             }
         }
         return result;
