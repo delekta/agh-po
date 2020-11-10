@@ -21,5 +21,7 @@ public class World {
         map.place(animal2);
 
         map.run(directions);
+
+        System.out.println(map.toString());
     }
 }

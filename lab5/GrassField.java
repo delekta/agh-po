@@ -14,14 +14,18 @@ public class GrassField extends AbstractWorldMap {
     // debugger() inherited from AbstractWorldMap
     //   animals inherited from AbstractWorldMap
     // run() inherited from AbstractWorldMap
+    // toString() inherited from AbstractWorldMap
+    // width, height inherited from AbstractWorldMap
 
 
     int n;
     public List<Grass> grasses;
 
-
-
     public GrassField(int number) {
+        // initialization of limits
+        this.height = Integer.MIN_VALUE;
+        this.width = Integer.MIN_VALUE;
+
         this.n = number;
         List<Grass> grasses= new ArrayList<>();
         this.animals = new ArrayList<>();
@@ -42,6 +46,16 @@ public class GrassField extends AbstractWorldMap {
         return true;
     }
 
+    // we update limits and then use them in toString() function
+    private void updateLimits(Vector2d v){
+        if(v.x > this.width){
+            this.width = v.x;
+        }
+        if(v.y > this.height){
+            this.height = v.y;
+        }
+    }
+
     private void placeGrasses(int number){
         Random rand = new Random();
         int x;
@@ -52,45 +66,16 @@ public class GrassField extends AbstractWorldMap {
                 y = rand.nextInt((int)Math.sqrt(this.n * 10));
 //                System.out.println("x:" + x + " | y:" + y);
             }while(isOccupied(new Vector2d(x, y))); // if place is occupied, fine new place
+            updateLimits(new Vector2d(x, y));
             this.grasses.add(new Grass(new Vector2d(x, y)));
         }
-    }
-
-
-
-    @Override
-    public String toString(){
-        int maxX = Integer.MIN_VALUE;
-        int maxY = Integer.MIN_VALUE;
-
-        // iterate through animals
-        for(Animal animal : animals){
-            if(animal.getPosition().x > maxX){
-                maxX = animal.getPosition().x;
-            }
-            if(animal.getPosition().y > maxY){
-                maxY = animal.getPosition().y;
-            }
-        }
-
-        // iterate through grasses
-        for(Grass grass : grasses){
-            if(grass.getPosition().x > maxX){
-                maxX = grass.getPosition().x;
-            }
-            if(grass.getPosition().y > maxY){
-                maxY = grass.getPosition().y;
-            }
-        }
-        MapVisualizer visual = new MapVisualizer(this);
-
-        return visual.draw(new Vector2d(-1, -1), new Vector2d(maxX, maxY));
     }
 
     @Override
     public boolean place(Animal animal) {
         if(!isOccupied(animal.getPosition())) {
             // placing animal
+            updateLimits(animal.getPosition());
             animals.add(animal);
             return true;
         }
@@ -100,6 +85,7 @@ public class GrassField extends AbstractWorldMap {
             // if grass takes the place, put the animal anyway
             if(object instanceof Grass){
 //                System.out.println("XD2");
+                updateLimits(animal.getPosition());
                 animals.add(animal);
                 return true; // important, because we succeed in placing animal
             }

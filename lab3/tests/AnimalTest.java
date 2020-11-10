@@ -5,15 +5,17 @@ import agh.cs.lab2.MoveDirection;
 import agh.cs.lab2.Vector2d;
 import agh.cs.lab3.Animal;
 import agh.cs.lab3.OptionsParser;
+import agh.cs.lab4.IWorldMap;
+import agh.cs.lab4.RectangularMap;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class AnimalTest{
-
+    IWorldMap map = new RectangularMap(10, 5);
     @Test
     public void orientationTest(){
         // Mostly for orientation, position
-        Animal animal = new Animal();
+        Animal animal = new Animal(map);
         String[] moves = new String[]{"l", "f", "l", "f", "f", "left", "backward"};
         OptionsParser parser = new OptionsParser();
 
@@ -30,7 +32,7 @@ public class AnimalTest{
 
     @Test
     public void positionTest(){
-        Animal animal = new Animal();
+        Animal animal = new Animal(map);
         String[] moves = new String[]{"r", "r", "f", "l", "backward", "right", "forward", "f"};
         OptionsParser parser = new OptionsParser();
 
@@ -47,7 +49,7 @@ public class AnimalTest{
 
     @Test
     public void goBeyondMapTest(){
-        Animal animal = new Animal();
+        Animal animal = new Animal(map);
         String[] moves = new String[]{"r", "r", "f", "l", "backward", "right", "forward", "f", "f", "f", "f", "f", "f"};
         OptionsParser parser = new OptionsParser();
 
@@ -64,7 +66,7 @@ public class AnimalTest{
 
     @Test
     public void parserTest(){
-        Animal animal = new Animal();
+        Animal animal = new Animal(map);
         String[] moves = new String[]{"r", "l", "kawa", "l", "backward", "right", "forward", "herbata", "woda", "f"};
         OptionsParser parser = new OptionsParser();
 

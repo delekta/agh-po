@@ -1,8 +1,10 @@
 package agh.cs.lab5;
 
 import agh.cs.lab2.MoveDirection;
+import agh.cs.lab2.Vector2d;
 import agh.cs.lab3.Animal;
 import agh.cs.lab4.IWorldMap;
+import agh.cs.lab4.MapVisualizer;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,6 +12,8 @@ import java.util.ListIterator;
 
 abstract public class AbstractWorldMap implements IWorldMap {
     public List<Animal> animals;
+    public int height;
+    public int width;
 
     @Override
     public void run(LinkedList<MoveDirection> directions) {
@@ -45,6 +49,13 @@ abstract public class AbstractWorldMap implements IWorldMap {
             }
         }
     }
+
+    @Override
+    public String toString(){
+        MapVisualizer visual = new MapVisualizer(this);
+        return visual.draw(new Vector2d(0, 0), new Vector2d(width, height));
+    }
+
 
     public void debugger(Animal animal, MoveDirection direction){
         System.out.println("Animal (x = " + animal.getPosition().x + " y = " + animal.getPosition().y

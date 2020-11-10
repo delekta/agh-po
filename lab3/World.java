@@ -1,6 +1,8 @@
 package agh.cs.lab3;
 
 import agh.cs.lab2.MoveDirection;
+import agh.cs.lab4.IWorldMap;
+import agh.cs.lab4.RectangularMap;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -8,7 +10,8 @@ import java.util.List;
 
 public class World {
     public static void main(String[] args){
-        Animal animal = new Animal();
+        IWorldMap map = new RectangularMap(10, 5);
+        Animal animal = new Animal(map);
         System.out.println(animal.toString());
         /*animal.move(MoveDirection.RIGHT);
         animal.move(MoveDirection.FORWARD);

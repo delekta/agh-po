@@ -15,7 +15,7 @@ public class World {
         int height = 5;
         IWorldMap map = new RectangularMapUsingList(width, height);
         map.place(new Animal(map));
-        map.place(new Animal(map,new Vector2d(3,4)));
+        map.place(new Animal(map,new Vector2d(2,3)));
         map.run(directions);
     }
 }
