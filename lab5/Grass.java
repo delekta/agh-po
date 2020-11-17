@@ -1,8 +1,9 @@
 package agh.cs.lab5;
 
 import agh.cs.lab2.Vector2d;
+import agh.cs.lab7.IMapElement;
 
-public class Grass {
+public class Grass implements IMapElement {
     private Vector2d position;
 
     public Vector2d getPosition() {

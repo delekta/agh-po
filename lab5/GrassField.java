@@ -5,6 +5,9 @@ import agh.cs.lab2.Vector2d;
 import agh.cs.lab3.Animal;
 import agh.cs.lab4.IWorldMap;
 import agh.cs.lab4.MapVisualizer;
+import agh.cs.lab7.IMapElement;
+import agh.cs.lab7.MapBoundary;
+import agh.cs.lab7.XComparator;
 
 import java.util.*;
 
@@ -19,6 +22,8 @@ public class GrassField extends AbstractWorldMap {
     // animalHashMap inherited from AbstractWorldMap
     // grassHashMap inherited from AbstractWorldMap
 
+    // added during lab7
+    MapBoundary sortedElements = new MapBoundary();
 
     int n;
     public List<Grass> grasses;
@@ -39,13 +44,28 @@ public class GrassField extends AbstractWorldMap {
     @Override
     public boolean canMoveTo(Vector2d position) {
         // I check only others Animals because only it can block move
-        if(!animals.isEmpty()){
-            for (Animal animal : animals) {
-                if (animal.getPosition().x == position.x && animal.getPosition().y == position.y) {
+
+        // Zmiana na uzywanie tylko LinkedHashMap 1 Git
+        Set<Vector2d> setKeys = animalHashMap.keySet();
+        Iterator<Vector2d> iterator = setKeys.iterator();
+
+
+        if(iterator.hasNext()){
+            while (iterator.hasNext()) {
+                Vector2d animalPoz = iterator.next();
+                if (animalPoz.x == position.x && animalPoz.y == position.y) {
                     return false;
                 }
             }
         }
+//        Wersja bez LinkedHashMap
+//        if(!animals.isEmpty()){
+//            for (Animal animal : animals) {
+//                if (animal.getPosition().x == position.x && animal.getPosition().y == position.y) {
+//                    return false;
+//                }
+//            }
+//        }
         return true;
     }
 
@@ -56,6 +76,16 @@ public class GrassField extends AbstractWorldMap {
         }
         if(v.y > this.height){
             this.height = v.y;
+        }
+    }
+
+    // TO DO
+    private void updateSortedElements(IMapElement element){
+        if(sortedElements.getXComparator().compare(sortedElements.getXSorted().last, element)){
+            sortedElements.addXSorted(element);
+
+        }if(sortedElements.getYComparator().compare(sortedElements.getYSorted().last, element)){
+            sortedElements.addYSorted(element);
         }
     }
 
@@ -71,6 +101,11 @@ public class GrassField extends AbstractWorldMap {
             }while(isOccupied(new Vector2d(x, y))); // if place is occupied, fine new place
 
             Grass grass = new Grass(new Vector2d(x, y));
+
+            // added during lab7
+            sortedElements.addXSorted(grass);
+            sortedElements.addYSorted(grass);
+
             updateLimits(grass.getPosition());
             this.grasses.add(grass);
 
@@ -84,8 +119,16 @@ public class GrassField extends AbstractWorldMap {
     public boolean place(Animal animal) {
         if(!isOccupied(animal.getPosition())) {
             // placing animal
+
+
+            // Zmiana na uzywanie tylko LinkedHashMap 2
             updateLimits(animal.getPosition());
+            // Nied dodaje bo juz nie uzywam
             animals.add(animal);
+
+            // added during lab7
+            sortedElements.addXSorted(animal);
+            sortedElements.addYSorted(animal);
 
             // added during lab6
             animalHashMap.put(animal.getPosition(), animal);
@@ -99,6 +142,10 @@ public class GrassField extends AbstractWorldMap {
 //                System.out.println("XD2");
                 updateLimits(animal.getPosition());
                 animals.add(animal);
+
+                // added during lab7
+                sortedElements.addXSorted(animal);
+                sortedElements.addYSorted(animal);
 
                 // added during lab6
                 animalHashMap.put(animal.getPosition(), animal);
