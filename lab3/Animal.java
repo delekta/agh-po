@@ -13,6 +13,8 @@ public class Animal implements IMapElement {
     // Added during lab7, IPositionChangeObserver???
     public List<IPositionChangeObserver> observers = new ArrayList<>();
 
+
+
     private IWorldMap map;
     
     private MapDirection orientation = MapDirection.NORTH;
@@ -98,26 +100,31 @@ public class Animal implements IMapElement {
     // Constructors
     public Animal(IWorldMap map){
         this.map = map;
+        // changed during lab7, IWorldMap extends IPositionChangeObserver, map is observer!
+        addObserver(map);
     }
 
     public Animal(IWorldMap map, Vector2d initialPosition){
         this.map = map;
         this.setPosition(initialPosition);
+
+        // changed during lab7, IWorldMap extends IPositionChangeObserver, map is observer!
+        addObserver(map);
     }
 
 
     // Added during lab7
-    void addObserver(IPositionChangeObserver observer){
+    private void addObserver(IPositionChangeObserver observer){
         observers.add(observer);
     }
 
-    void removeObserver(IPositionChangeObserver observer){
+    private void removeObserver(IPositionChangeObserver observer){
         observers.remove(observer);
     }
 
     public void notifyPositionChanged(Vector2d oldPosition, Vector2d newPosition){
-        for(IPositionChangeObserver observer: observers){
-            observer.positionChanged(oldPosition, newPosition);
+        for(IPositionChangeObserver o: observers){
+            o.positionChanged(oldPosition, newPosition);
         }
     }
 

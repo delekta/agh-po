@@ -13,6 +13,7 @@ import java.util.*;
 
 import java.lang.Math;
 
+// GrassField tez implementuje IPositionChangeObserver
 public class GrassField extends AbstractWorldMap {
     // debugger() inherited from AbstractWorldMap
     //   animals inherited from AbstractWorldMap
@@ -30,6 +31,7 @@ public class GrassField extends AbstractWorldMap {
 
 
     public GrassField(int number) {
+        // [LAB7] stop using it because of MapBoundary Sorted Elements
         // initialization of limits
         this.height = Integer.MIN_VALUE;
         this.width = Integer.MIN_VALUE;
@@ -46,28 +48,29 @@ public class GrassField extends AbstractWorldMap {
         // I check only others Animals because only it can block move
 
         // Zmiana na uzywanie tylko LinkedHashMap 1 Git
-        Set<Vector2d> setKeys = animalHashMap.keySet();
-        Iterator<Vector2d> iterator = setKeys.iterator();
-
-
-        if(iterator.hasNext()){
-            while (iterator.hasNext()) {
-                Vector2d animalPoz = iterator.next();
-                if (animalPoz.x == position.x && animalPoz.y == position.y) {
-                    return false;
-                }
-            }
-        }
-//        Wersja bez LinkedHashMap
-//        if(!animals.isEmpty()){
-//            for (Animal animal : animals) {
-//                if (animal.getPosition().x == position.x && animal.getPosition().y == position.y) {
+//        Set<Vector2d> setKeys = animalHashMap.keySet();
+//        Iterator<Vector2d> iterator = setKeys.iterator();
+//
+//
+//        if(iterator.hasNext()){
+//            while (iterator.hasNext()) {
+//                Vector2d animalPoz = iterator.next();
+//                if (animalPoz.x == position.x && animalPoz.y == position.y) {
 //                    return false;
 //                }
 //            }
 //        }
+//        Wersja bez LinkedHashMap
+        if(!animals.isEmpty()){
+            for (Animal animal : animals) {
+                if (animal.getPosition().x == position.x && animal.getPosition().y == position.y) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
+
 
     // we update limits and then use them in toString() function
     private void updateLimits(Vector2d v){
@@ -79,13 +82,27 @@ public class GrassField extends AbstractWorldMap {
         }
     }
 
-    // TO DO
+    // Added during lab7
+    // [aphollo github] 6. W przypadku aktualizacji pozycji obiektu, należy sprawdzić,
+    // czy należy zaktualizować odpowiedni indeksi zrobić to, tylko jeśli jest to konieczne.
+    // Rozumiem ze aktualizujemy gdy zmieniany element jest większy niż aktualnie największy element
     private void updateSortedElements(IMapElement element){
-        if(sortedElements.getXComparator().compare(sortedElements.getXSorted().last, element)){
+        if(isGreaterThanLast(sortedElements.getXComparator(), sortedElements.getXSorted(), element)){
             sortedElements.addXSorted(element);
 
-        }if(sortedElements.getYComparator().compare(sortedElements.getYSorted().last, element)){
+        }if(isGreaterThanLast(sortedElements.getYComparator(), sortedElements.getYSorted(), element)){
             sortedElements.addYSorted(element);
+        }
+    }
+
+    // Added during lab7
+    // If added element or updated element is greater than last in sortedSet => update sortedSet
+    private boolean isGreaterThanLast(Comparator comparator, SortedSet sortedSet, IMapElement element){
+        if(comparator.compare(sortedSet.last(), element) > 0){
+            return true;
+        }
+        else{
+            return false;
         }
     }
 
@@ -123,7 +140,6 @@ public class GrassField extends AbstractWorldMap {
 
             // Zmiana na uzywanie tylko LinkedHashMap 2
             updateLimits(animal.getPosition());
-            // Nied dodaje bo juz nie uzywam
             animals.add(animal);
 
             // added during lab7
@@ -207,5 +223,14 @@ public class GrassField extends AbstractWorldMap {
         else{
             return grassHashMap.get(position);
         }
+    }
+
+    // Added during lab7
+    @Override
+    public String toString(){
+        width = sortedElements.getXSorted().last().getPosition().x;
+        height = sortedElements.getYSorted().last().getPosition().y;
+        MapVisualizer visual = new MapVisualizer(this);
+        return visual.draw(new Vector2d(-1, -1), new Vector2d(width, height));
     }
 }

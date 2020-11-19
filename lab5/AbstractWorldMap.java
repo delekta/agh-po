@@ -59,6 +59,8 @@ abstract public class AbstractWorldMap implements IWorldMap, IPositionChangeObse
                         Vector2d oldPosition = animal.getPosition();
                         animal.setPosition(animal.getPosition().add(animal.getOrientation().toUnitVector()));
                         Vector2d newPosition = animal.getPosition();
+                        //Needed for debugging
+//                        positionChanged(oldPosition, newPosition);
                         animal.notifyPositionChanged(oldPosition, newPosition);
 //                        animalHashMap.put(animal.getPosition(), animal);
 
@@ -75,6 +77,8 @@ abstract public class AbstractWorldMap implements IWorldMap, IPositionChangeObse
                         Vector2d oldPosition = animal.getPosition();
                         animal.setPosition(animal.getPosition().subtract(animal.getOrientation().toUnitVector()));
                         Vector2d newPosition = animal.getPosition();
+                        // Needed for debugging
+//                        positionChanged(oldPosition, newPosition);
                         animal.notifyPositionChanged(oldPosition, newPosition);
 //                        animalHashMap.put(animal.getPosition(), animal);
                     }

@@ -9,6 +9,20 @@ import java.util.TreeSet;
 
 public class MapBoundary implements IPositionChangeObserver{
     private Comparator yComparator = new YComparator();
+    private Comparator xComparator = new XComparator();
+
+    private SortedSet<IMapElement> ySorted = new TreeSet<>(yComparator);
+    private SortedSet<IMapElement> xSorted = new TreeSet<>(xComparator);
+
+    public void addXSorted(IMapElement element){
+        xSorted.add(element);
+    }
+
+    public void addYSorted(IMapElement element){
+        ySorted.add(element);
+    }
+
+    //Getters
 
     public Comparator getYComparator() {
         return yComparator;
@@ -24,19 +38,6 @@ public class MapBoundary implements IPositionChangeObserver{
 
     public SortedSet<IMapElement> getXSorted() {
         return xSorted;
-    }
-
-    private Comparator xComparator = new XComparator();
-
-    private SortedSet<IMapElement> ySorted = new TreeSet<>(yComparator);
-    private SortedSet<IMapElement> xSorted = new TreeSet<>(xComparator);
-
-    public void addXSorted(IMapElement element){
-        xSorted.add(element);
-    }
-
-    public void addYSorted(IMapElement element){
-        ySorted.add(element);
     }
 
 

@@ -129,4 +129,9 @@ public class RectangularMap implements IWorldMap {
         + ") ruszy sie " + direction.toString());
         System.out.println(visual.draw(new Vector2d(0, 0), new Vector2d(width, height)));
     }
+
+    @Override
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
+        //
+    }
 }

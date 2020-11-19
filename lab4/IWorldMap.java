@@ -3,6 +3,7 @@ package agh.cs.lab4;
 import agh.cs.lab2.MoveDirection;
 import agh.cs.lab2.Vector2d;
 import agh.cs.lab3.Animal;
+import agh.cs.lab7.IPositionChangeObserver;
 
 import java.util.LinkedList;
 
@@ -13,7 +14,8 @@ import java.util.LinkedList;
  * @author apohllo
  *
  */
-public interface IWorldMap {
+// Changed during lab7
+public interface IWorldMap extends IPositionChangeObserver{
     /**
      * Indicate if any object can move to the given position.
      *
