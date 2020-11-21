@@ -6,14 +6,18 @@ import agh.cs.lab3.Animal;
 import agh.cs.lab4.IWorldMap;
 import agh.cs.lab4.MapVisualizer;
 import agh.cs.lab7.IPositionChangeObserver;
+import agh.cs.lab7.MapBoundary;
 
 import java.util.*;
 
-// Lab7 jakie obie mapy mają implementowac ten interface IPositionChanged???
-abstract public class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
+// Lab7 IWorldMap extends IPositionChangedObserver
+abstract public class AbstractWorldMap implements IWorldMap {
     public List<Animal> animals;
     public int height;
     public int width;
+
+    // added during lab7
+    MapBoundary sortedElements = new MapBoundary();
 
 
     // added during lab6
@@ -62,6 +66,9 @@ abstract public class AbstractWorldMap implements IWorldMap, IPositionChangeObse
                         //Needed for debugging
 //                        positionChanged(oldPosition, newPosition);
                         animal.notifyPositionChanged(oldPosition, newPosition);
+
+                        //positionChanged for MapBoundary SortedSet
+                        sortedElements.updateSortedElements(oldPosition, newPosition, animal);
 //                        animalHashMap.put(animal.getPosition(), animal);
 
                     }
@@ -80,6 +87,9 @@ abstract public class AbstractWorldMap implements IWorldMap, IPositionChangeObse
                         // Needed for debugging
 //                        positionChanged(oldPosition, newPosition);
                         animal.notifyPositionChanged(oldPosition, newPosition);
+
+                        //positionChanged for MapBoundary SortedSet
+                        sortedElements.updateSortedElements(oldPosition, newPosition, animal);
 //                        animalHashMap.put(animal.getPosition(), animal);
                     }
                     break;
@@ -100,6 +110,7 @@ abstract public class AbstractWorldMap implements IWorldMap, IPositionChangeObse
         System.out.println(this.toString());
     }
 
+    // Animal notifyPositionChanged using this func
     @Override
     public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
         Animal animal = animalHashMap.get(oldPosition);

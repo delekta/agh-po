@@ -22,9 +22,8 @@ public class GrassField extends AbstractWorldMap {
     // width, height inherited from AbstractWorldMap
     // animalHashMap inherited from AbstractWorldMap
     // grassHashMap inherited from AbstractWorldMap
+    // sortedElements inherited from AbstractWorldMap
 
-    // added during lab7
-    MapBoundary sortedElements = new MapBoundary();
 
     int n;
     public List<Grass> grasses;
@@ -79,30 +78,6 @@ public class GrassField extends AbstractWorldMap {
         }
         if(v.y > this.height){
             this.height = v.y;
-        }
-    }
-
-    // Added during lab7
-    // [aphollo github] 6. W przypadku aktualizacji pozycji obiektu, należy sprawdzić,
-    // czy należy zaktualizować odpowiedni indeksi zrobić to, tylko jeśli jest to konieczne.
-    // Rozumiem ze aktualizujemy gdy zmieniany element jest większy niż aktualnie największy element
-    private void updateSortedElements(IMapElement element){
-        if(isGreaterThanLast(sortedElements.getXComparator(), sortedElements.getXSorted(), element)){
-            sortedElements.addXSorted(element);
-
-        }if(isGreaterThanLast(sortedElements.getYComparator(), sortedElements.getYSorted(), element)){
-            sortedElements.addYSorted(element);
-        }
-    }
-
-    // Added during lab7
-    // If added element or updated element is greater than last in sortedSet => update sortedSet
-    private boolean isGreaterThanLast(Comparator comparator, SortedSet sortedSet, IMapElement element){
-        if(comparator.compare(sortedSet.last(), element) > 0){
-            return true;
-        }
-        else{
-            return false;
         }
     }
 
@@ -228,6 +203,7 @@ public class GrassField extends AbstractWorldMap {
     // Added during lab7
     @Override
     public String toString(){
+//        System.out.println("heh");
         width = sortedElements.getXSorted().last().getPosition().x;
         height = sortedElements.getYSorted().last().getPosition().y;
         MapVisualizer visual = new MapVisualizer(this);

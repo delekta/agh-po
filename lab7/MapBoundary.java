@@ -41,6 +41,30 @@ public class MapBoundary implements IPositionChangeObserver{
     }
 
 
+    // Added during lab7
+    // [aphollo github] 6. W przypadku aktualizacji pozycji obiektu, należy sprawdzić,
+    // czy należy zaktualizować odpowiedni indeksi zrobić to, tylko jeśli jest to konieczne.
+    // Rozumiem ze aktualizujemy gdy zmieniany element jest większy niż aktualnie największy element
+    // My PositionChanged
+    public void updateSortedElements(Vector2d oldPosition, Vector2d newPosition, IMapElement element){
+        if(isGreaterThanLast(xComparator, xSorted, element)){
+            addXSorted(element);
+
+        }if(isGreaterThanLast(yComparator, ySorted, element)){
+            addYSorted(element);
+        }
+    }
+
+    // Added during lab7
+    // If added element or updated element is greater than last in sortedSet => update sortedSet
+    private boolean isGreaterThanLast(Comparator comparator, SortedSet sortedSet, IMapElement element){
+        if(comparator.compare(element, sortedSet.last()) > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
 
     @Override
